@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head'); -%>
+</head>
+
+<body>
+    <%- include('./partials/scripts'); -%>
+        <%- include('./partials/navbar'); -%>
+            </br>
+            <form action="/api/generate" method="POST">
+                <div class="mx-auto col-10 col-md-8 col-lg-6">
+                    <label for="urlshorter" class="form-label">Short URL</label>
+                    <input type="text" class="form-control" id="originalUrl" name='originalUrl'
+                        aria-describedby="Short URL" placeholder="Enter the link here">
+                    <div id="emailHelp" class="form-text">Paste the URL to be shortened</div>
+                </div>
+                <div class="mx-auto col-10 col-md-8 col-lg-6">
+                    <button type="submit" class="btn btn-primary">Shorten URL</button>
+                </div>
+                <div class="mx-auto col-10 col-md-8 col-lg-6">
+                    <label for="shortid" class="form-label">
+                        <%= locals.shortid %>
+                    </label>
+                </div>
+            </form>
+            <% if(locals.urls) { %>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">ShortID</th>
+                            <th scope="col">Redirect</th>
+                            <th scope="col">Clicks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% urls.forEach((url,index)=> { %>
+                            <tr>
+                                <th>
+                                    <%= index + 1 %>
+                                </th>
+                                <td>
+                                    <%= url.shortid %>
+                                </td>
+                                <td>
+                                    <%= url.originalUrl %>
+                                </td>
+                                <td>
+                                    <%= url.visitHistory?.length %>
+                                </td>
+                            </tr>
+                            <% });%>
+                                <% } %>
+</body>
+
+</html>
